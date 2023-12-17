@@ -97,7 +97,7 @@ public abstract class BaseAspect {
      */
     protected ControllerLog interceptor(ProceedingJoinPoint proceedingJoinPoint) {
         // 获取 controller 执行结果
-        Map<?, ?> r = null;
+        Object r = null;
         Throwable throwable = null;
         HttpServletRequest request = getHttpServletRequest();
         // 异步获取请求中的内容
@@ -116,11 +116,7 @@ public abstract class BaseAspect {
                 }
             }
             // 执行请求
-            if (proceedingJoinPoint.proceed() instanceof Map<?, ?> temp) {
-                r = temp;
-            } else {
-                throw ServiceException.getInstance(ResponseProperties.getError(), "接口返回类型异常");
-            }
+            r = proceedingJoinPoint.proceed();
         } catch (Throwable th) {
             // 拦截异常
             throwable = th;

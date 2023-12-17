@@ -1,7 +1,5 @@
 package com.meoooow.aspect.entity;
 
-import com.meoooow.aspect.utils.PrintLog;
-import jakarta.annotation.Resource;
 import lombok.Getter;
 import lombok.Setter;
 

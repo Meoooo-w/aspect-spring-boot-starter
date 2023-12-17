@@ -3,7 +3,6 @@ package com.meoooow.aspect.interceptor;
 
 import com.meoooow.aspect.entity.BaseCodeMsg;
 import com.meoooow.aspect.entity.ControllerLog;
-import com.meoooow.aspect.entity.ResponseProperties;
 import com.meoooow.aspect.entity.enums.CodeMsgEnum;
 import com.meoooow.aspect.utils.PrintLog;
 import jakarta.annotation.Resource;
@@ -14,11 +13,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Map;
 
 
 @Slf4j
@@ -45,7 +40,7 @@ public class ControllerAspect extends BaseAspect {
      * @param proceedingJoinPoint 切面对象
      * @return Object
      */
-    protected Map<?, ?> getResult(ProceedingJoinPoint proceedingJoinPoint) {
+    protected Object getResult(ProceedingJoinPoint proceedingJoinPoint) {
         // 获取请求
         ControllerLog controllerLog = interceptor(proceedingJoinPoint);
         // 异步获取接口信息，防止报错，影响接口返回
@@ -54,7 +49,7 @@ public class ControllerAspect extends BaseAspect {
         this.saveResult(log, proceedingJoinPoint.getArgs());
         // 异步打印log
         printLog.printLog(log);
-        return (Map<?, ?>) controllerLog.getResult();
+        return controllerLog.getResult();
     }
 
     /**
